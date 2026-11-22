@@ -31,28 +31,42 @@ class Player {
 
             Set<Integer> claimed = new HashSet<>();
             for (int[] s : myShips) {
-                int sx = s[1], sy = s[2], gold = s[5], cd = s[6];
+                int sx = s[1], sy = s[2], vx = s[3], vy = s[4], gold = s[5], cd = s[6];
                 String fireCmd = "";
                 if (cd == 0) {
                     for (int[] e : enemyShips) {
                         int predX = e[1] + e[3];
                         int predY = e[2] + e[4];
-                        if (Math.hypot(predX - sx, predY - sy) <= 420 && e[5] > 0) {
+                        if (Math.hypot(predX - sx, predY - sy) <= 440 && (e[5] > 0 || Math.hypot(predX - maelstromX, predY - maelstromY) < 240)) {
                             fireCmd = " FIRE " + predX + " " + predY;
                             break;
                         }
                     }
                 }
 
+                double speed = Math.hypot(vx, vy);
                 double distToMaelstrom = Math.hypot(sx - maelstromX, sy - maelstromY);
-                if (distToMaelstrom < 130) {
+                double nextDistToMaelstrom = Math.hypot((sx + vx) - maelstromX, (sy + vy) - maelstromY);
+
+                // Emergency ANCHOR brake when drifting into Maelstrom eye or overshooting target at high speed
+                if (distToMaelstrom < 210 && nextDistToMaelstrom < distToMaelstrom && speed > 35) {
+                    System.out.println("ANCHOR" + fireCmd);
+                    continue;
+                }
+                if (distToMaelstrom < 145) {
                     int escapeX = sx + (sx - maelstromX) * 2;
                     int escapeY = sy + (sy - maelstromY) * 2;
                     System.out.println("SAIL " + escapeX + " " + escapeY + " 100" + fireCmd);
                     continue;
                 }
                 if (gold >= 5 || chests.isEmpty()) {
-                    System.out.println("SAIL " + myPortX + " " + myPortY + " 95" + fireCmd);
+                    double distPort = Math.hypot(myPortX - sx, myPortY - sy);
+                    double nextDistPort = Math.hypot(myPortX - (sx + vx), myPortY - (sy + vy));
+                    if (distPort < 220 && nextDistPort > distPort && speed > 40) {
+                        System.out.println("ANCHOR" + fireCmd);
+                    } else {
+                        System.out.println("SAIL " + myPortX + " " + myPortY + " 95" + fireCmd);
+                    }
                     continue;
                 }
 
@@ -69,7 +83,9 @@ class Player {
                     }
                 }
                 if (chosen != -1) claimed.add(chosen);
-                System.out.println("SAIL " + best[1] + " " + best[2] + " 90" + fireCmd);
+                int tx = best[1] - vx / 2;
+                int ty = best[2] - vy / 2;
+                System.out.println("SAIL " + tx + " " + ty + " 90" + fireCmd);
             }
         }
     }
