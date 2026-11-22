@@ -114,7 +114,15 @@
           <li>éventuellement suivi de <action>FIRE tx ty</action> (ou <action>FIRE tx ty</action> seul) où <var>tx</var> et <var>ty</var> sont les coordonnées entières visées par vos canons</li>
           <!-- END -->
         </ul>
+        <!-- BEGIN level1 -->
+        <p>Vous pouvez ajouter <action>MSG texte</action> en fin de ligne. Exemple : <action>SAIL 800 450 90</action></p>
+        <!-- END -->
+        <!-- BEGIN level2 -->
+        <p>Vous pouvez ajouter <action>MSG texte</action> en fin de ligne. Exemple : <action>SAIL 800 450 90</action> ou <action>ANCHOR</action></p>
+        <!-- END -->
+        <!-- BEGIN level3 -->
         <p>Vous pouvez ajouter <action>MSG texte</action> en fin de ligne. Exemple : <action>SAIL 800 450 90 FIRE 750 400</action></p>
+        <!-- END -->
       </div>
     </div>
     <div class="blk">

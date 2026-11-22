@@ -114,7 +114,15 @@
           <li>optionally followed by <action>FIRE tx ty</action> (or standalone <action>FIRE tx ty</action>) where <var>tx</var> and <var>ty</var> are integer cannon target coordinates</li>
           <!-- END -->
         </ul>
+        <!-- BEGIN level1 -->
+        <p>You may optionally append <action>MSG text</action> at the end of a line. Example: <action>SAIL 800 450 90</action></p>
+        <!-- END -->
+        <!-- BEGIN level2 -->
+        <p>You may optionally append <action>MSG text</action> at the end of a line. Example: <action>SAIL 800 450 90</action> or <action>ANCHOR</action></p>
+        <!-- END -->
+        <!-- BEGIN level3 -->
         <p>You may optionally append <action>MSG text</action> at the end of a line. Example: <action>SAIL 800 450 90 FIRE 750 400</action></p>
+        <!-- END -->
       </div>
     </div>
     <div class="blk">
