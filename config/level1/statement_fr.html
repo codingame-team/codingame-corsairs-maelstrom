@@ -1,0 +1,72 @@
+<div id="statement_back" class="statement_back" style="display:none"></div>
+<div class="statement-body">
+  <!-- LEAGUE ALERT -->
+  <div style="color: #7cc576; background-color: rgba(124, 197, 118,.1); padding: 20px; margin-bottom: 15px; text-align: left">
+    <p style="margin-bottom: 0"><b>Ligue Bois 2 :</b> Contrôlez <b>1 Navire Corsaire</b> soumis à l'inertie et à la masse variable de sa cargaison. Récoltez les coffres flottants et rapportez-les à votre Port d'Attache !</p>
+  </div>
+
+  <!-- GOAL -->
+  <div class="statement-section statement-goal">
+    <h1><span class="icon icon-goal">&nbsp;</span><span>Objectif</span></h1>
+    <div class="statement-goal-content">
+      Soyez la première flotte pirate à livrer <b>35 Or</b> à son Port d'Attache, ou ayez livré le plus d'Or à la fin des <b>120 tours</b>.
+    </div>
+  </div>
+
+  <!-- RULES -->
+  <div class="statement-section statement-rules">
+    <h1><span class="icon icon-rules">&nbsp;</span><span>Règles</span></h1>
+    <div class="statement-rules-content">
+      <p>La bataille se déroule dans un secteur maritime de <b>1600&times;900</b> avec cinématique inertielle, masse de cargaison variable et courants marins tourbillonnants :</p>
+      <ul>
+        <li><b>Navigation Inertielle (<action>SAIL x y power</action>) :</b> Applique une poussée (<var>0 &le; power &le; 100</var>) vers <var>(x, y)</var>. Plus le navire transporte d'or, plus son inertie augmente :
+          <br><code>accel = power / (1.0 + 0.15 * gold)</code></li>
+        <li><b>Cinématique &amp; Frottement de l'Eau :</b> À chaque tour, après l'ajout de la poussée et des courants à <var>(vx, vy)</var>, le navire avance en <var>(x + vx, y + vy)</var>, puis la friction de l'eau multiplie <var>(vx, vy)</var> par <const>0.78</const>.</li>
+        <li><b>Collecte &amp; Livraison :</b> Passer à moins de <const>85</const> unités d'un coffre charge son Or à bord. Entrer à moins de <const>130</const> unités de votre Port d'Attache décharge tout l'Or transporté dans votre score !</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PROTOCOL -->
+  <div class="statement-section statement-protocol">
+    <h1><span class="icon icon-protocol">&nbsp;</span><span>Entrées &amp; Sorties du Jeu</span></h1>
+    <div class="statement-protocol-content">
+      <div class="blk">
+        <div class="title">Entrées d'Initialisation</div>
+        <div class="text">
+          Ligne 1 : <var>width</var> <var>height</var> <var>leagueLevel</var> (<const>1600 900</const> et niveau de la ligue).<br>
+          Ligne 2 : <var>myPortX</var> <var>myPortY</var> <var>oppPortX</var> <var>oppPortY</var> <var>maelstromX</var> <var>maelstromY</var>.
+        </div>
+      </div>
+      <div class="blk">
+        <div class="title">Entrées pour un Tour de Jeu</div>
+        <div class="text">
+          <ul>
+            <li>Ligne 1 : <var>shipCount</var>, le nombre total de navires.</li>
+            <li>Les <var>shipCount</var> lignes suivantes : <var>shipId</var> <var>owner</var> <var>x</var> <var>y</var> <var>vx</var> <var>vy</var> <var>gold</var> <var>cooldown</var> (<var>owner</var> vaut toujours <const>0</const> pour vos navires, listés en premier, et <const>1</const> pour ceux de l'adversaire).</li>
+            <li>Ligne suivante : <var>chestCount</var>, le nombre de coffres flottants actifs.</li>
+            <li>Les <var>chestCount</var> lignes suivantes : <var>chestId</var> <var>cx</var> <var>cy</var> <var>chestGold</var>.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="blk">
+        <div class="title">Sortie pour un Tour de Jeu</div>
+        <div class="text">
+          Affichez <b>une ligne par navire que vous possédez</b> :
+          <ul>
+            <li><action>SAIL x y power</action> (<var>0 &le; power &le; 100</var>)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CODE SOURCE -->
+  <div class="statement-section statement-examples">
+    <h1><span class="icon icon-example">&nbsp;</span><span>Code Source</span></h1>
+    <div class="statement-examples-text">
+      Le code source complet de l'arbitre (Referee), du viewer et des bots de référence est disponible sur GitHub :
+      <a href="https://github.com/pmourey/codingame-corsairs-maelstrom" target="_blank" rel="noopener noreferrer">https://github.com/pmourey/codingame-corsairs-maelstrom</a>
+    </div>
+  </div>
+</div>
