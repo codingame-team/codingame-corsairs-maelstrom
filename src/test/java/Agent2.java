@@ -5,7 +5,7 @@ public class Agent2 {
         Scanner in = new Scanner(System.in);
         int width = in.nextInt();
         int height = in.nextInt();
-        int leagueLevel = in.nextInt();
+        int leagueLevel = 4 - in.nextInt();
         int myPortX = in.nextInt();
         int myPortY = in.nextInt();
         int oppPortX = in.nextInt();
@@ -14,6 +14,7 @@ public class Agent2 {
         int maelstromY = in.nextInt();
 
         while (true) {
+            int turn = in.nextInt();
             int shipCount = in.nextInt();
             List<int[]> myShips = new ArrayList<>();
             List<int[]> enemyShips = new ArrayList<>();

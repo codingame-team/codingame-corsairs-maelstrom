@@ -14,6 +14,7 @@ class Player {
         int maelstromY = in.nextInt();
 
         while (true) {
+            int turn = in.nextInt();
             int shipCount = in.nextInt();
             List<int[]> myShips = new ArrayList<>();
             List<int[]> enemyShips = new ArrayList<>();

@@ -80,10 +80,11 @@ public class Referee extends AbstractReferee {
         initChests();
         initGraphics();
 
-        // Send initialization inputs (always from each player's perspective: myPort first, oppPort second)
+        // Send initialization inputs (3=Wood 3, 2=Wood 2, 1=Wood 1; myPort first, oppPort second)
+        int woodDivision = Math.max(1, 4 - leagueLevel);
         for (Player player : gameManager.getActivePlayers()) {
             Player opp = gameManager.getPlayer(1 - player.getIndex());
-            player.sendInputLine(String.format("%d %d %d", SEA_WIDTH, SEA_HEIGHT, leagueLevel));
+            player.sendInputLine(String.format("%d %d %d", SEA_WIDTH, SEA_HEIGHT, woodDivision));
             player.sendInputLine(String.format("%d %d %d %d %d %d",
                 player.getPortX(), player.getPortY(), opp.getPortX(), opp.getPortY(),
                 MAELSTROM_X, MAELSTROM_Y));
@@ -207,7 +208,9 @@ public class Referee extends AbstractReferee {
             .setAnchor(0.5)
             .setFontFamily("Lato")
             .setFontSize(36)
-            .setFillColor(0xffe082)
+            .setFillColor(0xffffff)
+            .setStrokeThickness(4)
+            .setStrokeColor(0x000000)
             .setZIndex(30);
 
         // Player HUDs & Ports
@@ -404,7 +407,7 @@ public class Referee extends AbstractReferee {
 
         // 1. Send inputs to each active player (Owner is ALWAYS 0 for self, 1 for opponent)
         for (Player player : gameManager.getActivePlayers()) {
-            sendTurnInput(player);
+            sendTurnInput(player, turn);
             player.execute();
         }
 
@@ -439,8 +442,9 @@ public class Referee extends AbstractReferee {
         checkEarlyEnd(turn);
     }
 
-    private void sendTurnInput(Player player) {
+    private void sendTurnInput(Player player, int turn) {
         int myIdx = player.getIndex();
+        player.sendInputLine(String.valueOf(turn));
         List<Ship> orderedShips = new ArrayList<>();
         for (Ship s : allShips) {
             if (s.getOwner().getIndex() == myIdx) orderedShips.add(s);

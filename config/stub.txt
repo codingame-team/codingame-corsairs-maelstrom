@@ -1,6 +1,7 @@
 read width:int height:int leagueLevel:int
 read myPortX:int myPortY:int oppPortX:int oppPortY:int maelstromX:int maelstromY:int
 gameloop
+read turn:int
 read shipCount:int
 loop shipCount read shipId:int owner:int x:int y:int vx:int vy:int gold:int cooldown:int
 read chestCount:int
@@ -13,14 +14,15 @@ Navigate the treacherous currents of the Maelstrom! Plunder floating treasure ch
 INPUT
 width: Width of the sea sector (1600)
 height: Height of the sea sector (900)
-leagueLevel: Current league level (1=Wood 2, 2=Wood 1, 3=Bronze+)
+leagueLevel: Current Wood division (3=Wood 3, 2=Wood 2, 1=Wood 1)
 myPortX: X coordinate of your Home Port
 myPortY: Y coordinate of your Home Port
 oppPortX: X coordinate of opponent Home Port
 oppPortY: Y coordinate of opponent Home Port
 maelstromX: X coordinate of the central Maelstrom (800)
 maelstromY: Y coordinate of the central Maelstrom (450)
-shipCount: Total number of ships
+turn: Current turn number (1 to 120)
+shipCount: Total number of ships (2 in Wood 3, 4 in Wood 2/1)
 shipId: Unique identifier of the ship
 owner: 0 if you own this ship (listed first), 1 if owned by opponent
 x: X coordinate of the ship
@@ -28,7 +30,7 @@ y: Y coordinate of the ship
 vx: Horizontal velocity of the ship
 vy: Vertical velocity of the ship
 gold: Amount of gold currently carried by the ship (increases ship mass!)
-cooldown: Turns remaining before this ship can FIRE its cannons again
+cooldown: Turns remaining before cannons can FIRE (always 0 in Wood 3 and Wood 2)
 chestCount: Number of active floating treasure chests
 chestId: Unique identifier of the treasure chest
 cx: X coordinate of the treasure chest
@@ -36,4 +38,4 @@ cy: Y coordinate of the treasure chest
 chestGold: Gold value of the treasure chest
 
 OUTPUT
-One line per owned ship: SAIL <x> <y> <power> [FIRE <tx> <ty>] [MSG <text>] | ANCHOR [FIRE <tx> <ty>] | FIRE <tx> <ty>
+One line per owned ship (in the order your ships were given): [SAIL <x> <y> <power> | ANCHOR] [FIRE <tx> <ty>] [MSG <text>]
